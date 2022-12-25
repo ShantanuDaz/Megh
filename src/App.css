@@ -1,37 +1,44 @@
-.App {
-  text-align: center;
+#app {
+  height: max-content;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat repeat;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#currentWeather {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  padding: 5% 10%;
+  gap: 10px;
+}
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background-color: rgba(25, 25, 112, 0.475);
 }
 
-.App-link {
-  color: #61dafb;
+.spinnerBox {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+.spinner {
+  width: 50px;
+  aspect-ratio: 1/1;
+  border: 5px solid skyblue;
+  border-top: 5px solid white;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite forwards;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.glass {
+  background-color: hsla(0, 0%, 100%, 0.17);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes rotate {
   to {
     transform: rotate(360deg);
   }

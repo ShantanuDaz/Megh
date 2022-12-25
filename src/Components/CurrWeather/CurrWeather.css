@@ -1,0 +1,17 @@
+.weather {
+  height: fit-content;
+  padding: 20px;
+  border-radius: 10px;
+  line-height: 25px;
+  transition: all 0.3s;
+}
+
+.weather:hover {
+  background-color: hsla(0, 0%, 100%, 0.3);
+}
+#tempType {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
