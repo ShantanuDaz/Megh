@@ -1,0 +1,8 @@
+#logo {
+  font-size: 40px;
+}
+
+#logo > img {
+  height: 30px;
+  aspect-ratio: 1/1;
+}

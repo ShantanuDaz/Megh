@@ -15,3 +15,9 @@
   align-items: center;
   gap: 5px;
 }
+
+#AQI {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

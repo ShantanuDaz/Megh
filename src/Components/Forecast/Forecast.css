@@ -5,3 +5,7 @@
   overflow-y: hidden;
   white-space: nowrap;
 }
+
+#forecast > .weather {
+  text-align: center;
+}

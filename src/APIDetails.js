@@ -11,6 +11,7 @@ export const locOption = {
 
 export const WeatherURL = "https://api.openweathermap.org/data/2.5/weather?";
 export const ForecastURL = "https://api.openweathermap.org/data/2.5/forecast?";
+export const AQIURL = "http://api.openweathermap.org/data/2.5/air_pollution?";
 export const WeatherAPIKey = "31fafe69dbbdcdbbcd74baa155007804";
 
 export const WeatherData = {

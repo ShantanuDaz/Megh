@@ -3,11 +3,12 @@ import "./CurrWeather.css";
 const CurrWeather = ({
   weather = {},
   tempType = "C",
+  AQI = {},
   changeTempType = () => {},
 }) => {
   const getIcon = () => {
     let data = weather?.weather ? weather?.weather[0] : {};
-    const iconId = data?.icon;
+    const iconId = data?.icon || "1d";
     return `https://openweathermap.org/img/wn/${iconId}@2x.png`;
   };
 
@@ -22,6 +23,17 @@ const CurrWeather = ({
         {tempType}
       </span>
     );
+  };
+
+  const getAQISevearity = () => {
+    let sev = {
+      1: "Good",
+      2: "Fair",
+      3: "Moderate",
+      4: "Poor",
+      5: "Very Poor",
+    };
+    return sev[AQI?.mian ? AQI?.mian?.aqi : 1];
   };
   return (
     <div className="glass weather">
@@ -43,8 +55,51 @@ const CurrWeather = ({
           onChange={() => changeTempType("F")}
         />
       </div>
-      <img src={getIcon()} alt="icon" />
-      {/* <p>{weather?.weather ? weather?.weather[0]?.main : ""}</p> */}
+      <div id="AQI">
+        <img src={getIcon()} alt="icon" />
+        <p>
+          <p>
+            <strong>{getAQISevearity()}</strong>
+          </p>
+          <p>
+            AQI : <strong>{AQI?.components ? AQI?.components.pm2_5 : 0}</strong>
+            {" ,"}
+            {window.innerWidth > 1000 ? (
+              <span>
+                PM10 :{" "}
+                <strong>{AQI?.components ? AQI?.components.pm10 : 0}</strong>
+              </span>
+            ) : (
+              <p>
+                PM10 :{" "}
+                <strong>{AQI?.components ? AQI?.components.pm10 : 0}</strong>
+              </p>
+            )}
+          </p>
+          {window.innerWidth > 1000 && (
+            <>
+              <p>
+                CO : <strong>{AQI?.components ? AQI?.components.co : 0}</strong>
+                {" ,"}O<sub>3</sub> :{" "}
+                <strong>{AQI?.components ? AQI?.components.o3 : 0}</strong>
+              </p>
+              <p>
+                NO : <strong>{AQI?.components ? AQI?.components.no : 0}</strong>
+                {" ,"}
+                NO
+                <sub>2</sub> :{" "}
+                <strong>{AQI?.components ? AQI?.components.no2 : 0}</strong>
+              </p>
+              <p>
+                NH<sub>3</sub> :{" "}
+                <strong>{AQI?.components ? AQI?.components.nh3 : 0}</strong> ,SO
+                <sub>2</sub> :{" "}
+                <strong>{AQI?.components ? AQI?.components.so2 : 0}</strong>
+              </p>
+            </>
+          )}
+        </p>
+      </div>
       <p>{`${new Date()}`}</p>
       <p>{weather?.weather ? weather?.weather[0]?.description : ""}</p>
       <p>{changeTempFormate(weather?.weather ? weather?.main?.temp : 0)}</p>

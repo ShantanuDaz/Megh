@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { WeatherURL, WeatherAPIKey, ForecastURL } from "./APIDetails";
+import { WeatherURL, WeatherAPIKey, ForecastURL, AQIURL } from "./APIDetails";
 import CurrWeather from "./Components/CurrWeather/CurrWeather";
 import Loacation from "./Components/Location/Location";
 import Forecast from "./Components/Forecast/Forecast";
-// import Sunny from "./Assets/images/Sunny.png";
+import Logo from "./Components/Logo/Logo";
 function App() {
   const defaultLocation = () => {
     return {
@@ -25,11 +25,13 @@ function App() {
   const [location, setLocation] = useState(defaultLocation());
   const [weather, setWeather] = useState({});
   const [forecast, setForecast] = useState([]);
+  const [AQI, setAQI] = useState({});
   const [tempType, setTempType] = useState("C");
 
   useEffect(() => {
     getWeather();
     getForcast();
+    getAQI();
   }, [JSON.stringify(location)]);
 
   const getWeather = async () => {
@@ -41,6 +43,17 @@ function App() {
     } catch (error) {
       console.error(error);
       setWeather({});
+    }
+  };
+  const getAQI = async () => {
+    let url = `${AQIURL}lat=${location.latitude}&lon=${location.longitude}&appid=${WeatherAPIKey}`;
+    try {
+      let res = await fetch(url);
+      let data = await res.json();
+      setAQI(data.list[0]);
+    } catch (error) {
+      console.error(error);
+      setAQI({});
     }
   };
 
@@ -73,6 +86,7 @@ function App() {
       }}
     >
       <div id="currentWeather">
+        <Logo />
         <Loacation
           location={location}
           changeLocation={(loc) => setLocation(loc)}
@@ -81,6 +95,7 @@ function App() {
           weather={weather}
           tempType={tempType}
           changeTempType={(val) => setTempType(val)}
+          AQI={AQI}
         />
         <Forecast forecast={forecast} tempType={tempType} />
       </div>
