@@ -45,8 +45,8 @@ const Loacation = ({ location = "", changeLocation = () => {} }) => {
           </p>
         </div>
         <div>
-          <p>latitude : {location.latitude}</p>
-          <p>longitude : {location.longitude}</p>
+          <p>latitude : {location.latitude.toFixed(2)}</p>
+          <p>longitude : {location.longitude.toFixed(2)}</p>
         </div>
       </div>
       {search && (

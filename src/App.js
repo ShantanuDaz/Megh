@@ -32,6 +32,7 @@ function App() {
     getWeather();
     getForcast();
     getAQI();
+    // eslint-disable-next-line
   }, [JSON.stringify(location)]);
 
   const getWeather = async () => {

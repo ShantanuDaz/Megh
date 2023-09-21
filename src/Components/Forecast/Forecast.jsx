@@ -21,10 +21,10 @@ const Forecast = ({ forecast = [], tempType = "C" }) => {
   };
   return (
     <div id="forecast">
-      {forecast.map((weather) => {
+      {forecast.map((weather, i) => {
         return (
-          <div className="glass weather">
-            <img src={getIcon(weather)} alt="icon" />
+          <div className="glass weather" key={i}>
+            <img src={getIcon(weather)} alt="icon" loading="lazy" />
             <p>{weather.dt_txt}</p>
             <p>{weather?.weather ? weather?.weather[0]?.description : ""}</p>
             <p>

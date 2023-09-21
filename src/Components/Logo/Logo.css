@@ -1,8 +1,15 @@
 #logo {
   font-size: 40px;
+  font-weight: 600;
 }
 
 #logo > img {
   height: 30px;
   aspect-ratio: 1/1;
+}
+
+#logo > span {
+  background-image: linear-gradient(90deg, #33383e, white, #13181c);
+  background-clip: text;
+  color: transparent;
 }

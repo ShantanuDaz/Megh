@@ -33,7 +33,7 @@ const CurrWeather = ({
       4: "Poor",
       5: "Very Poor",
     };
-    return sev[AQI?.mian ? AQI?.mian?.aqi : 1];
+    return sev[AQI?.main ? AQI?.main?.aqi : 1];
   };
   return (
     <div className="glass weather">
