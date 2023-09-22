@@ -70,20 +70,34 @@ function App() {
       setForecast([]);
     }
   };
-  const getBackgroundOrColor = (backgorund = true) => {
+  const getBackgroundOrColor = (background = true) => {
     const des = (
       weather?.weather ? weather?.weather[0]?.description : ""
     ).replace(" ", "");
     const data = weather?.weather ? weather?.weather[0] : {};
-    const dayOrNight = (data?.icon || "d").slice(-1);
-    return backgorund ? `./Assets/images/${des}${dayOrNight}.png` : dayOrNight;
+    let dayOrNight = (data?.icon || "d").slice(-1);
+    let url = `./Assets/images/${des}${dayOrNight}.png`;
+    const img = new Image();
+    img.src = url;
+
+    img.onload = () => {
+      // Image exists, set background image
+      document.getElementById("app").style.backgroundImage = `url(${url})`;
+    };
+
+    img.onerror = () => {
+      // Image doesn't exist, set background color to white
+      document.getElementById("app").style.backgroundColor = "#282727";
+      document.getElementById("app").style.color = "white";
+    };
+    return background ? url : dayOrNight;
   };
   return (
     <div
       id="app"
       style={{
         backgroundImage: `url(${getBackgroundOrColor()})`,
-        backgroundColor: "black",
+        backgroundColor: "#282727",
         color: getBackgroundOrColor(false) === "n" ? "white" : "black",
       }}
     >
