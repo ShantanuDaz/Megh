@@ -83,6 +83,7 @@ function App() {
       id="app"
       style={{
         backgroundImage: `url(${getBackgroundOrColor()})`,
+        backgroundColor: "black",
         color: getBackgroundOrColor(false) === "n" ? "white" : "black",
       }}
     >
