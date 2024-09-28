@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Header from "./Components/Header/Header";
+import Main from "./Components/Main/Main";
+import Footer from "./Components/Footer/Footer";
 
 const App = () => {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log("Latitude:", latitude);
+          console.log("Longitude:", longitude);
+        },
+        (error) => {
+          console.error("Error Code = " + error.code + " - " + error.message);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <Main />
+      <Footer />
+    </>
+  );
 };
 
 export default App;

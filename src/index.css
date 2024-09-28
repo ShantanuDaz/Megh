@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body {
+  background-image: linear-gradient(#00202f, #00959f);
+  padding: 10px;
+  font-family: Helvetica;
+}
+#root {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+  height: calc(100dvh - 20px);
+  display: grid;
+  overflow: auto;
+  align-content: space-between;
+  grid-template-rows: min-content 1fr min-content;
+  color: white;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 4px 4px 10px rgb(0 0 0 / 9%);
+}
+
+.sweep-in {
+  animation: elongate 300ms ease-in;
+}
+
+@keyframes elongate {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
