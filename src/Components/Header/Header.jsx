@@ -1,15 +1,49 @@
 import { useSnapshot } from "valtio";
 import state from "../../store/state";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const Header = () => {
   const [isSearching, setIsSearching] = useState(false);
+  const [locations, setLocations] = useState();
   const snap = useSnapshot(state);
+
+  const focus = (a) => a && a.focus();
+
+  const search = async (e) => {
+    try {
+      if (e.target.value) setLocations([]);
+      {
+        const res = await fetch(
+          `${
+            import.meta.env.VITE_API_URL
+          }locations/v1/cities/autocomplete?apikey=${
+            import.meta.env.VITE_API_KEY
+          }&q=${e.target.value}`
+        );
+        const data = await res.json();
+        setLocations(data || []);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const debounce = (cb, time) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        cb(...args);
+      }, time);
+    };
+  };
+
+  const debouncedSearch = debounce(search, 500);
   return (
     <header
       className={`px-3 py-2 flex ${
         isSearching ? "justify-end" : "justify-between"
-      } items-center sticky top-0 relative`}
+      } items-center sticky top-0`}
     >
       {!isSearching && (
         <>
@@ -32,17 +66,22 @@ const Header = () => {
         <>
           <input
             type="search"
-            className="rounded-full px-3 py-2 w-[100%] sweep-in text-black"
+            onBlur={() => setIsSearching(false)}
+            ref={focus}
+            onChange={debouncedSearch}
+            className="rounded-full px-3 py-2 w-[100%] sweep-in text-white bg-transparent border-2 outline-none"
           />
-          <span
-            className="absolute text-black right-[6%] text-2xl"
-            onClick={() => setIsSearching(false)}
-          >
-            &#10006;
-          </span>
-          <span className="absolute text-black right-[2%] text-2xl">
-            &#128269;
-          </span>
+          <div className="absolute top-[100%] left-0 right-0 px-3 bg-white text-black max-h-[40vh] overflow-auto">
+            {locations.map((location, i) => (
+              <div key={i}>
+                <h5 className="text-xl">{location.LocalizedName}</h5>
+                <span className="text-xs">
+                  {location.AdministrativeArea.LocalizedName},
+                  {location.Country.LocalizedName}
+                </span>
+              </div>
+            ))}
+          </div>
         </>
       )}
     </header>
