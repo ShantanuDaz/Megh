@@ -6,6 +6,7 @@ const Header = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [locations, setLocations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOnLocation, setIsOnLocation] = useState(false);
   const snap = useSnapshot(state);
 
   const focus = (a) => a && a.focus();
@@ -42,6 +43,7 @@ const Header = () => {
   };
 
   const debouncedSearch = debounce(search, 500);
+
   return (
     <header
       className={`px-3 py-2 flex ${
@@ -54,7 +56,7 @@ const Header = () => {
             <h3 className="text-3xl">{snap.locationData.LocalizedName}</h3>
             <span className="text-xs">
               {snap.locationData.AdministrativeArea.LocalizedName},
-              {snap.locationData.AdministrativeArea.CountryID}
+              {snap.locationData.Country.LocalizedName}
             </span>
           </hgroup>
           <img
@@ -69,24 +71,39 @@ const Header = () => {
         <>
           <input
             type="search"
-            onBlur={() => setIsSearching(false)}
+            onBlur={() => !isOnLocation && setIsSearching(false)}
             ref={focus}
             onChange={(e) => {
               debouncedSearch(e.target.value);
               setIsLoading(true);
             }}
-            className="rounded-full px-3 py-2 w-[100%] sweep-in text-white bg-transparent border-2 outline-none"
+            className="rounded-full px-3 py-2 w-full sweep-in text-white bg-transparent border-2 outline-none"
           />
           <div className="absolute top-[100%] left-0 right-0 px-3 bg-white text-black max-h-[40vh] overflow-auto">
-            {locations.map((location, i) => (
-              <div key={i} className="cursor-pointer hover:bg-gray-50">
-                <h5 className="text-xl">{location.LocalizedName}</h5>
-                <span className="text-xs">
-                  {location.AdministrativeArea.LocalizedName},
-                  {location.Country.LocalizedName}
-                </span>
-              </div>
-            ))}
+            {isLoading ? (
+              <p>Searching...</p>
+            ) : (
+              <>
+                {locations.map((location, i) => (
+                  <div
+                    key={i}
+                    className="cursor-pointer hover:bg-gray-50"
+                    onClick={() => {
+                      state.locationData = location;
+                      setIsSearching(false);
+                    }}
+                    onMouseEnter={() => setIsOnLocation(true)}
+                    onMouseLeave={() => setIsOnLocation(false)}
+                  >
+                    <h5 className="text-xl">{location.LocalizedName}</h5>
+                    <span className="text-xs">
+                      {location.AdministrativeArea.LocalizedName},
+                      {location.Country.LocalizedName}
+                    </span>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </>
       )}

@@ -1,5 +1,5 @@
 import { proxy } from "valtio";
-
+import { devtools } from "valtio/utils";
 // Create the global state
 const state = proxy({
   location: [18.63, 73.71],
@@ -469,5 +469,6 @@ const state = proxy({
     Link: "http://www.accuweather.com/en/in/nere/2776775/current-weather/2776775?lang=en-us",
   },
 });
+devtools(state, { name: "state name", enabled: true });
 
 export default state;
