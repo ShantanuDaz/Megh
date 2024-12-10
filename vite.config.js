@@ -18,13 +18,40 @@ export default defineConfig({
       manifest: {
         name: "MEGH",
         short_name: "MEGH",
-        description: "Your Personal cloud",
+        description: "Your Personal cloud teller",
         theme_color: "#ffffff",
         icons: [
           {
-            src: "/AppIcon.png", // Add these icons to the public directory
-            size: "192x192",
+            src: "/AppIcon-144.png",
+            sizes: "144x144",
             type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "/AppIcon-192.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "/AppIcon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any",
+          },
+        ],
+        screenshots: [
+          {
+            src: "SS-M.png",
+            sizes: "750x1216",
+            type: "image/png",
+            form_factor: "narrow",
+          },
+          {
+            src: "SS-D.png",
+            sizes: "2048-1216",
+            type: "image/png",
+            form_factor: "wide",
           },
         ],
       },

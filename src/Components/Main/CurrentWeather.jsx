@@ -27,9 +27,11 @@ const CurrentWeather = () => {
     <section className="p-3 rounded-md border-2">
       <section>
         <h4>{snap.data.WeatherText}</h4>
-        <h1 className="text-3xl flex">
-          {snap.data.Temperature.Metric.Value}
-          <span className="text-xs">°C</span>
+        <h1 className="text-3xl flex justify-between items-center">
+          <span>
+            {snap.data.Temperature.Metric.Value}
+            <span className="text-xs">°C</span>
+          </span>
           <img
             src={`https://developer.accuweather.com/sites/default/files/${
               snap.data.WeatherIcon < 10
