@@ -13,18 +13,19 @@ const Header = () => {
 
   const search = async (value) => {
     try {
-      if (value) setLocations([]);
-      {
-        const res = await fetch(
-          `${
-            import.meta.env.VITE_API_URL
-          }locations/v1/cities/autocomplete?apikey=${
-            import.meta.env.VITE_API_KEY
-          }&q=${value}`
-        );
-        const data = await res.json();
-        setLocations(data || []);
+      if (!value) {
+        setLocations([]);
+        return;
       }
+      const res = await fetch(
+        `${
+          import.meta.env.VITE_API_URL
+        }geo/1.0/direct?q=${value}&limit=10&appid=${
+          import.meta.env.VITE_API_KEY
+        }`
+      );
+      const data = await res.json();
+      setLocations(data || []);
     } catch (err) {
       console.log(err);
     } finally {
@@ -53,10 +54,9 @@ const Header = () => {
       {!isSearching && (
         <>
           <hgroup>
-            <h3 className="text-3xl">{snap.locationData.LocalizedName}</h3>
+            <h3 className="text-3xl">{snap.locationData.name}</h3>
             <span className="text-xs">
-              {snap.locationData.AdministrativeArea.LocalizedName},
-              {snap.locationData.Country.LocalizedName}
+              {snap.locationData.state},{snap.locationData.country}
             </span>
           </hgroup>
           <img
@@ -95,10 +95,9 @@ const Header = () => {
                     onMouseEnter={() => setIsOnLocation(true)}
                     onMouseLeave={() => setIsOnLocation(false)}
                   >
-                    <h5 className="text-xl">{location.LocalizedName}</h5>
+                    <h5 className="text-xl">{location.name}</h5>
                     <span className="text-xs">
-                      {location.AdministrativeArea.LocalizedName},
-                      {location.Country.LocalizedName}
+                      {location.state},{location.country}
                     </span>
                   </div>
                 ))}

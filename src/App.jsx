@@ -18,12 +18,12 @@ const App = () => {
               const res = await fetch(
                 `${
                   import.meta.env.VITE_API_URL
-                }locations/v1/cities/geoposition/search?apikey=${
+                }geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${
                   import.meta.env.VITE_API_KEY
-                }&q=${latitude},${longitude}`
+                }`
               );
               const data = await res.json();
-              state.locationData = data;
+              state.locationData = data[0];
             } catch (err) {
               console.log(err);
             }
