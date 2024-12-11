@@ -17,6 +17,17 @@ const CurrentWeather = () => {
         );
         const data = await res.json();
         state.data = data;
+
+        const res2 = await fetch(
+          `${
+            import.meta.env.VITE_API_URL
+          }/data/2.5/air_pollution/forecast?lat=${snap.locationData.lat}&lon=${
+            snap.locationData.lon
+          }&appid=${import.meta.env.VITE_API_KEY}
+          `
+        );
+        const airData = await res.json();
+        state.airData = airData[0];
       } catch (err) {
         console.log(err);
       } finally {
@@ -26,7 +37,7 @@ const CurrentWeather = () => {
   }, [snap.locationData]);
 
   return (
-    <section className="p-3 rounded-md border-2">
+    <section className="p-3 rounded-md border-2 flex items-center justify-between flex-col sm:flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row">
       <section>
         <h4>{snap.data.weather[0].description}</h4>
         <h1 className="text-3xl ">
@@ -55,9 +66,27 @@ const CurrentWeather = () => {
           </span>
         </h1>
       </section>
-      <section></section>
+      <AirPollution />
     </section>
   );
 };
 
 export default CurrentWeather;
+
+const AirPollution = () => {
+  const snap = useSnapshot(state);
+
+  return (
+    <section>
+      {Object.entries(snap.airData.components).map(([key, value]) => {
+        return (
+          // <div key={key}>
+          //   <h4>{key}</h4>
+          //   <h1>{value}</h1>
+          // </div>
+          <p key={key} className="whitespace-nowrap">{`${key} :- ${value}`}</p>
+        );
+      })}
+    </section>
+  );
+};

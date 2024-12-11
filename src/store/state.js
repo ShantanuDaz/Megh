@@ -55,6 +55,22 @@ const state = proxy({
     name: "Delhi",
     cod: 200,
   },
+  airData: {
+    main: {
+      aqi: 2,
+    },
+    components: {
+      co: 240.33,
+      no: 0,
+      no2: 0.01,
+      o3: 68.67,
+      so2: 0.06,
+      pm2_5: 0.5,
+      pm10: 1.11,
+      nh3: 0.03,
+    },
+    dt: 1733911200,
+  },
 });
 devtools(state, { name: "state name", enabled: true });
 
